@@ -1,6 +1,7 @@
 package com.company;
 
 import java.lang.reflect.Array;
+import java.util.Objects;
 
 public class GenericArrayClass<E> implements GenericStack<E> {
     private E elements[];
@@ -33,11 +34,12 @@ public class GenericArrayClass<E> implements GenericStack<E> {
 
     @Override
     public E remove() {
-        E nullElement = null;
-        if (!this.isEmpty()) {
-            nullElement = elements[top--];
-        }
-        return nullElement;
+        E saved = elements[top];
+        elements[top] = null;
+        top--;
+        size++;
+        Objects.requireNonNull(elements[top]);
+        return saved;
     }
 
     @Override
